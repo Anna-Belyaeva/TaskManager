@@ -28,8 +28,8 @@ public class TodosTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
-    @Test
-    public void shouldCheckQueryForSimpleTask() {
+    @Test // поиск по 1 задаче
+    public void shouldFindQueryForSimpleTask() {
 
         Todos todos = new Todos();
         todos.add(simpleTask);
@@ -42,7 +42,7 @@ public class TodosTest {
     }
 
     @Test
-    public void shouldNotCheckQueryForSimpleTask() {
+    public void shouldNotFindQueryForSimpleTask() {
 
         Todos todos = new Todos();
         todos.add(simpleTask);
@@ -54,7 +54,7 @@ public class TodosTest {
     }
 
     @Test
-    public void shouldCheckQueryForEpic() {
+    public void shouldFindQueryForEpic() {
 
         Todos todos = new Todos();
         todos.add(epic);
@@ -66,7 +66,7 @@ public class TodosTest {
     }
 
     @Test
-    public void shouldNotCheckQueryForEpic() {
+    public void shouldNotFindQueryForEpic() {
 
         Todos todos = new Todos();
         todos.add(epic);
@@ -78,7 +78,7 @@ public class TodosTest {
     }
 
     @Test
-    public void shouldCheckTopicQueryForMeeting() {
+    public void shouldFindQueryForMeeting() {
 
         Todos todos = new Todos();
         todos.add(meeting);
@@ -90,7 +90,7 @@ public class TodosTest {
     }
 
     @Test
-    public void shouldNotCheckTopicQueryForMeeting() {
+    public void shouldNotFindQueryForMeeting() {
 
         Todos todos = new Todos();
         todos.add(meeting);
@@ -101,26 +101,42 @@ public class TodosTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
-    @Test
-    public void shouldCheckProjectQueryForMeeting() {
+    @Test // поиск по нескольким задачам
+    public void shouldFindQueryFor2Tasks() {
 
         Todos todos = new Todos();
         todos.add(meeting);
+        todos.add(epic);
 
-        Task[] expected = {meeting};
-        Task[] actual = todos.search("Приложение");
+        Task[] expected = {epic};
+        Task[] actual = todos.search("Молоко");
 
         Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldNotCheckProjectQueryForMeeting() {
+    public void shouldNotFindQueryFor2Tasks() {
 
         Todos todos = new Todos();
         todos.add(meeting);
+        todos.add(epic);
 
         Task[] expected = {};
-        Task[] actual = todos.search("Приложения");
+        Task[] actual = todos.search("хлеб");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test //ни одна из 3 задач не подходит
+    public void shouldNotFindQueryForTasks() {
+
+        Todos todos = new Todos();
+        todos.add(meeting);
+        todos.add(epic);
+        todos.add(simpleTask);
+
+        Task[] expected = {};
+        Task[] actual = todos.search("погулять с собакой");
 
         Assertions.assertArrayEquals(expected, actual);
     }
