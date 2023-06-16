@@ -2,17 +2,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TodosTest {
-    SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+        SimpleTask simpleTask = new SimpleTask(5, "Купить Хлеб");
 
-    String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
-    Epic epic = new Epic(55, subtasks);
+        String[] subtasks = { "Молоко", "Яйца", "Хлеб" };
+        Epic epic = new Epic(55, subtasks);
 
-    Meeting meeting = new Meeting(
-            555,
-            "Выкатка 3й версии приложения",
-            "Приложение НетоБанка",
-            "Во вторник после обеда"
-    );
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда"
+        );
 
     @Test
     public void shouldAddThreeTasksOfDifferentType() {
@@ -36,7 +36,7 @@ public class TodosTest {
 
 
         Task[] expected = {simpleTask};
-        Task[] actual = todos.search("Позвонить");
+        Task[] actual = todos.search("Купить Хлеб");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -48,7 +48,7 @@ public class TodosTest {
         todos.add(simpleTask);
 
         Task[] expected = {};
-        Task[] actual = todos.search("позвонить");
+        Task[] actual = todos.search("купить");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -60,7 +60,7 @@ public class TodosTest {
         todos.add(epic);
 
         Task[] expected = {epic};
-        Task[] actual = todos.search("Хлеб");
+        Task[] actual = todos.search("Яйца");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -105,11 +105,11 @@ public class TodosTest {
     public void shouldFindQueryFor2Tasks() {
 
         Todos todos = new Todos();
-        todos.add(meeting);
+        todos.add(simpleTask);
         todos.add(epic);
 
-        Task[] expected = {epic};
-        Task[] actual = todos.search("Молоко");
+        Task[] expected = {simpleTask, epic};
+        Task[] actual = todos.search("Хлеб");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -118,7 +118,7 @@ public class TodosTest {
     public void shouldNotFindQueryFor2Tasks() {
 
         Todos todos = new Todos();
-        todos.add(meeting);
+        todos.add(simpleTask);
         todos.add(epic);
 
         Task[] expected = {};
